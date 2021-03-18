@@ -1,7 +1,7 @@
 module Codebreaker
   class Game
     attr_reader :hints_total, :attempts_total, :hints, :have_hints, :attempts_left, :secret_code, :hints_used, :round_result, :difficulty_str
-    attr_accessor :user_name
+    attr_accessor :user_name, :active_game
 
     DIFFICULTIES = {
       easy: { attempts: 15, hints: 2 },
@@ -19,6 +19,7 @@ module Codebreaker
       assign_difficulty(difficulty)
       @hints = secret_code.uniq.shuffle.take(@hints_total)
       @hints_used = 0
+      @active_game = true
     end
 
     def guess(user_value)
