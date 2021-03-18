@@ -1,6 +1,7 @@
 module Codebreaker
   class Game
     attr_reader :hints_total, :attempts_total, :hints, :have_hints, :attempts_left, :secret_code, :hints_used, :round_result, :difficulty_str
+    attr_accessor :user_name
 
     DIFFICULTIES = {
       easy: { attempts: 15, hints: 2 },
@@ -24,7 +25,7 @@ module Codebreaker
       @user_code = user_value.each_char.map(&:to_i)
       handle_numbers
       @attempts_left -= 1
-      @round_result.empty? ? 'No matches' : @round_result
+      @round_result.empty? ? nil : @round_result
     end
 
     def exact_match?(guess)
