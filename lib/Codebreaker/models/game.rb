@@ -49,7 +49,7 @@ module Codebreaker
     end
 
     def lose?
-      @attempts_left == 1
+      @attempts_left <= 1
     end
 
     def hints_used
