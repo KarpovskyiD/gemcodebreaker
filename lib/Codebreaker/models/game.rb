@@ -20,7 +20,7 @@ module Codebreaker
       @user_code = user_value.chars.map(&:to_i)
       handle_numbers
       @attempts_left -= 1
-      @round_result.empty? ? I18n.t('no_matches') : @round_result
+      @round_result.empty? ? nil : @round_result
     end
 
     def handle_numbers
@@ -49,7 +49,7 @@ module Codebreaker
     end
 
     def lose?
-      @attempts_left.zero?
+      @attempts_left == 1
     end
 
     def hints_used
