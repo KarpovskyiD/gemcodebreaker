@@ -1,0 +1,12 @@
+require 'yaml'
+require 'i18n'
+require_relative '../config/i18n'
+
+require_relative './Codebreaker/models/validated_object'
+require_relative './Codebreaker/models/db'
+require_relative './Codebreaker/models/difficulty'
+require_relative './Codebreaker/models/game'
+require_relative './Codebreaker/models/guess'
+require_relative './Codebreaker/models/player'
+require_relative './Codebreaker/models/statistics'
+require_relative './Codebreaker/version'

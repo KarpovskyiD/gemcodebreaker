@@ -20,3 +20,6 @@ Metrics/ClassLength:
   
 Style/FileName:
   Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false

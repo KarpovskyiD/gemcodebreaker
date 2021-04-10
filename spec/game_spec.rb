@@ -1,9 +1,14 @@
-require_relative '../lib/Codebreaker/game'
-
 RSpec.describe Codebreaker::Game do
+  subject(:game) { described_class.new(easy_level) }
+  let(:easy_level) { Codebreaker::Difficulty.new('easy') }
+  let(:medium_game) { described_class.new(medium_level) }
+  let(:medium_level) { Codebreaker::Difficulty.new('medium') }
+  let(:hard_game) { described_class.new(hard_level) }
+  let(:hard_level) { Codebreaker::Difficulty.new('hard') }
+
   context 'Checking different values initialization if new game was created' do
     context 'Checking secret_code initialization' do
-      let(:secret_code) { subject.secret_code }
+      let(:secret_code) { game.secret_code }
 
       it 'Checking if secret code has only 4 digits' do
         expect(secret_code.size).to eq(4)
@@ -16,43 +21,43 @@ RSpec.describe Codebreaker::Game do
 
     context 'Checking functionality of hints assigning according to level' do
       it 'level assigned - easy' do
-        expect(Codebreaker::Game.new(:easy).hints.size).to eq(Codebreaker::Game::DIFFICULTIES.dig(:easy, :hints))
+        expect(game.assign_hints.size).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:easy, :hints))
       end
 
       it 'level assigned - medium' do
-        expect(Codebreaker::Game.new(:medium).hints.size).to eq(Codebreaker::Game::DIFFICULTIES.dig(:medium, :hints))
+        expect(medium_game.assign_hints.size).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:medium, :hints))
       end
 
       it 'level assigned - hard' do
-        expect(Codebreaker::Game.new(:hard).hints.size).to eq(Codebreaker::Game::DIFFICULTIES.dig(:hard, :hints))
+        expect(hard_game.assign_hints.size).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:hard, :hints))
       end
     end
 
     context 'Checking functionality of attempts assigning according to level' do
       it 'level assigned easy' do
-        expect(Codebreaker::Game.new(:easy).attempts_total).to eq(Codebreaker::Game::DIFFICULTIES.dig(:easy,
+        expect(game.attempts_total).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:easy,
                                                                                                       :attempts))
       end
 
       it 'level assigned medium' do
-        expect(Codebreaker::Game.new(:medium).attempts_total).to eq(Codebreaker::Game::DIFFICULTIES.dig(:medium,
+        expect(medium_game.attempts_total).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:medium,
                                                                                                         :attempts))
       end
 
       it 'level assigned hard' do
-        expect(Codebreaker::Game.new(:hard).attempts_total).to eq(Codebreaker::Game::DIFFICULTIES.dig(:hard,
+        expect(hard_game.attempts_total).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:hard,
                                                                                                       :attempts))
       end
     end
 
     context 'Checking the functionality of hints using' do
       it 'The last digit is selected from hints array when hints method is executed' do
-        hint = subject.hints.last
-        expect(subject.take_a_hint).to eq(hint)
+        hint = game.assign_hints.last
+        expect(game.take_a_hint).to eq(hint)
       end
 
       it 'Size of hints array is changed by -1 when hint method is used' do
-        expect { subject.take_a_hint }.to change { subject.hints.size }.by(-1)
+        expect { game.take_a_hint }.to change { game.assign_hints.size }.by(-1)
       end
     end
 
@@ -137,14 +142,14 @@ RSpec.describe Codebreaker::Game do
     end
 
     context 'Comparing secret code with some value. True or false sholud be returned' do
-      before { subject.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
+      before { game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
 
       it 'Result of comparing is TRUE' do
-        expect(subject.exact_match?('1234')).to be_truthy
+        expect(game.win?('1234')).to be_truthy
       end
 
       it 'result of comparing is FALSE' do
-        expect(subject.exact_match?('1334')).to be_falsey
+        expect(game.win?('1334')).to be_falsey
       end
     end
 
