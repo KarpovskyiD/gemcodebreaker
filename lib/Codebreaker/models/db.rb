@@ -18,8 +18,8 @@ module Codebreaker
         File.write(file_path, (record << data).to_yaml)
       end
   
-      def score_data(req, game, player)
-        { name: player.name, difficulty: req.session[:difficulty], attempts_total: game.attempts_total,
+      def score_data(req, game, player, difficulty)
+        { name: player.name, difficulty: difficulty.level[:name], attempts_total: game.attempts_total,
           attempts_used: game.attempts_used, hints_used: game.hints_used }
       end
   
