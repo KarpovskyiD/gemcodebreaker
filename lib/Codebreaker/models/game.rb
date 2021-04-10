@@ -1,6 +1,7 @@
 module Codebreaker
   class Game < ValidatedObject
     attr_reader :hints_total, :attempts_total, :attempts_left, :secret_code, :hints_left
+    attr_accessor :active_game
 
     RANGE_OF_DIGITS = (1..6).freeze
     SECRET_CODE_LENGTH = 4
@@ -56,7 +57,7 @@ module Codebreaker
     end
 
     def attempts_used
-      @attempts_total - @attempts_left + 1
+      @attempts_total - @attempts_left
     end
 
     private
